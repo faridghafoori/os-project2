@@ -7,10 +7,10 @@ client_objs=client.o util.o
 all: server client
 
 server: $(server_objs) $(headers)
-	$(CC) $(server_objs) -o server.out
+	$(CC) $(server_objs) -o server
 
 client: $(client_objs) $(headers)
-	$(CC) $(client_objs) -o client.out
+	$(CC) $(client_objs) -o client
 
 server.o: server.cpp $(headers)
 	$(CC) $(CFLAGS) server.cpp -o server.o

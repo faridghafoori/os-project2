@@ -1,0 +1,65 @@
+New features of JavaScript Arrays with ES2015
+ 
+
+In this article we will be discussing the new additions in ES2015 which substantially improves the way we work with Arrays in JavaScript.
+
+Array Destructuring
+Array destructuring allows us to assign values to variables from an array using syntax similar to the array itself. Let’s look at the code below where we have an array of animals. We need to assign variables a, b & c to first three elements of the array.
+
+console.log(a,b,c);
+Now here we needed 3 statements just to assign 3 variables a, b & c. If we had like 10 variables, we would need 10 such statements. This approach definitely doesn’t scale efficiently. To cater to this problem, ES2015 introduced the concept to array destructuring. So instead of assigning each variable in a new line, we assign all local variables in single line of code within square brackets. For example:
+
+console.log(a,b,c);
+In the above example, JavaScript matches the number of variables in the left to the number of elements in the array in right. This approach is easy to understand, requires lot less code and is very scalable. The syntax for this is
+
+[ variable1, variable2, ..., variableN ] = array;
+We can reduce the number of lines even further by declaring the variables at the time of assignment itself.
+
+let animals =['Dog','Cat','Rat'];
+ 
+let [a,b,c] = animals;
+ 
+console.log(a,b,c);
+or
+
+let animals =['Dog','Cat','Rat'];
+ 
+let a,b,c;
+ 
+[a, ,b] = animals;
+ 
+console.log(a,b);
+So in the above example, we didn’t want to access the 2nd element of the array, so we left it’s placeholder in the array as blank and still got the correct values in variables a and b i.e. a = ‘Dog’ and b = ‘Rat’. ‘Cat’ was discarded.
+
+Now next time you need to swap two variables say a and b, do the following and you’ll be done in a single line.
+
+[a, b] = [b, a];
+For-of Loop:
+ES2015 introduced a new loop to iterate over array elements. Firstly let’s see the current approach we follow when we need to access (print in our example) all elements in an array. We currently use any of the below three approaches.
+
+1)
+
+for(let i = 0; i < animals.length; i++){
+   console.log(animals[i]);
+}
+2)
+
+for(let index in animals){
+   console.log(animals[index]);
+}
+3)
+
+animals.forEach(function(animal){
+   console.log(animal);
+});
+The problem with the 1st& 2nd approach is that we need to iteratively update the value of index and then use that index value to access the element in the array. This is useless extra effort. 3rd< approach is free from this problem, but it has another problem. What if we don’t want to execute function over all elements of the array? What if we want to break out of the loop on some condition? We cannot do that in the 3 approach.
+
+So with the use of ‘for-of’ loop, we can directly access the element inside the loop as shown in below example
+
+for(let animal of animals){
+   console.log(animal);
+}
+We don’t need any extra effort of assigning the index variable each time. Now we can directly access the individual element of the array
+
+Array.prototype.find()
+With ES2015, JavaScript introduced a new higher order function to be used on JavaScript arrays. This function is Array.prototype.find(). This function returns the element which satisfies a given condition. It takes as an argument a callback function which returns a boolean value (true or false). The callback function is executed against each element in the array until callback returns true for an element or when callback function has been executed for all element in the array.

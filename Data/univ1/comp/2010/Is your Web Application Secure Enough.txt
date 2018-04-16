@@ -1,0 +1,40 @@
+Real world runs on fuel and the Virtual world on security.
+
+In the World Wide Web, it is a misnomer that security always means privacy. When we say a web application is secure it means that there is a basic trusted level of login security, along with the number of valid executions /operations that an application is expected to perform without wandering or paving its own course of action.
+
+Web application security deals with threats much more complicated than username and password thefts. Most of it relates to using scripting languages to perform background tasks when an application runs, without the user having a knowledge about the background process running. The rest deals with user giving entries in forms, entered data is processed or user clicking a malicious URL sent from an unidentified source. The possibilities are endless.
+
+The application developers recognized the dangers arising from flaws in web application and established a community called OWASP (Online Web Application Security Project). OWASP -a nonprofit organization- is the standards body for web application security. OWASP community includes corporations, educational organizations and individuals around the world.
+
+After years of testing applications for vulnerabilities, OWASP came up with ten security flaws that make a web application vulnerable.
+
+
+The ten major threats against web applications are:-
+
+Injection: When a user enters data in forms through input boxes, it gets stored and displayed using a database (SQL, LDAP). They are often found in SQL, LDAP, Xpath, or NoSQL queries; OS commands; XML parsers, SMTP Headers, program arguments, etc. Shell commands infused behind such methods may give the attacker access to the Operating system and other linked external programs to carry out any malicious task. In other words SQL injection allows attackers to relay malicious code through web application to other systems. This might trick the application in performing and executing process which were not instructed to be run by a valid user/admin.It can result in data loss or corruption, lack of accountability or denial of access. Injection may sometimes lead to complete host takeover.
+ 
+
+Broken authentication and session management:Broken authentication and session     management allows attackers to gain details like password, tokens and session IDs which then enable them to login to that users account and impersonate them to carry out transactions. Accounts may be hijacked by attackers by using the active session IDs exposed in URLs.To avoid such attacks user credentials must be passed through encrypted connections and stored using concepts of hashing and encryptions. Timeout of session IDs and authentication must be carried out in order to discourage such threats. Re-authentication in case of forgot password must be done to verify the identity of the user.
+Cross Site Scripting (XSS): This occurs when a user enters data without input user validation. and this untrusted data is sent to the application without carrying out proper validation (browser side scripting). Next time when other user visits the site or runs the same application, he witnesses the application behaves in a manner in which the attacker wanted it to behave. The malicious script can access cookies, session tokens or any other sensitive information retained by the browser and used with that site. These scripts can also rewrite the content of the HTML page.
+ 
+
+Insecure direct object reference: This occurs when a reference (object, file or database) is exposed to be viewed/modified/used by a user who is not verified for access (authorization). These flaws enable attackers to compromise all the data linked to the modified parameter. Once an attacker finds a way into the application, most likely he’ll will figure a way to dig deeper and compromise any data possible.Example: Access given to all users when only admin should have the access right to view/use/modify data.
+ 
+
+Security misconfiguration: The application, application server, web server, database server should all have secure configurations. Developers and system administrators need to work together to ensure that the entire stack is configured properly. If a system is compromised through faulty security configurations, data can be stolen or modified slowly over time.
+ 
+
+Sensitive data exposure: Sensitive data like credit card details may not be protected in the best possible manner. Attackers might break into such databases and carry out transactions using these data. This includes data and backup of that data. Attackers cannot break the encryption directly, they steal keys, cause middle man attacks or steal clean text data from server or browser. The only way to protecting such sensitive data is by using strong encryption algorithms.
+ 
+
+Missing function level access control: Function level authorization must be present on both application and on servers. Most of the web applications verify function level access rights before making that functionality accessible to the user. However, if the access control checks are not performed on the server, hackers will be able to penetrate into the application without proper authorization. Requests need to be verified on both ends to hinder the forgery of   requests to access functionality without valid authorization.Example: Anonymous users access private functionality or regular users may use a privileged function if function level access control is not implemented.
+ 
+
+Cross Site Request Forgery (CSRF): Also known as one click attack or session riding. This flaw allows the attacker to force an end user to execute unwanted actions on a web application in which they are currently authenticated and send a forged HTTP request along with user authentication details to      a vulnerable website. It actually results in an undesired function on the victim’s behalf.Example: Most of the suspicious links you receive via suspicious or unidentified sources through mails.
+ 
+
+Using components with known vulnerabilities: Some tools that are used to develop an application may have security flaws, which are already a known fact and common knowledge to attackers. Implementing such a tool is not advisable as it might in-turn result in giving rise to most of the flaws mentioned above. The attacker knows the weakness of one component so he might have knowledge of what other specific areas of application are vulnerable because of this flaw.Virtually every application has these issues because most development teams don’t focus on ensuring their components/libraries are up to date. In many cases, the developers don’t even know all the components they are using, never mind their versions. Component dependencies make things even worse.
+ 
+
+Invalidated redirects and forwards: Web applications may redirect or forward users to other websites. Attackers may forward users to unauthorized pages or redirect them to malware sites or trick users to disclose sensitive information like passwords. Because the malicious link are modified to look identical to the original site, phishing attempts may have a more trustworthy appearance.
+Although all the above facts are very well explained in the links below; my intention is just to give a quick glance of all the security threats that we must be aware of as internet users.

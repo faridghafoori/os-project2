@@ -1,0 +1,56 @@
+Automated Brute Forcing on web-based login
+Brute force attacks work by calculating every possible combination that could make up a password and testing it to see if it is the correct password. As the password’s length increases, the amount of time, on average, to find the correct password increases exponentially. This means short passwords can usually be discovered quite quickly, but longer passwords may take decades [Source : Wiki]
+
+It may be feasible in some situations as computer hardwares are getting faster and faster. A simple brute-force attack would start with one-digit passwords, then two-digit passwords and so on, trying all possible combinations until one works.
+
+A better idea is “dictionary attack” that tries words in a dictionary — or a list of common passwords — instead of all possible passwords. This can be very effective, as many people use such weak and common passwords.
+
+We can use automated tool for Brute forcing web-based login form
+
+Using Hydra to dictionary-attack web-based login forms
+Hydra is an online password cracking for dictionary-attacks. It tries lists of user-names and passwords until a successful login is found. It is multi-threaded and can try username/password combinations at a rate of thousands per minute
+
+Bad login, stop bruteforcing me!Bad u/p combination for user: a
+So, now we have the information we need to attack this login form, we can use this info to construct a Hydra brute-force attack as follows:
+Automated Brute Forcing on web-based login
+Brute force attacks work by calculating every possible combination that could make up a password and testing it to see if it is the correct password. As the password’s length increases, the amount of time, on average, to find the correct password increases exponentially. This means short passwords can usually be discovered quite quickly, but longer passwords may take decades [Source : Wiki]
+
+It may be feasible in some situations as computer hardwares are getting faster and faster. A simple brute-force attack would start with one-digit passwords, then two-digit passwords and so on, trying all possible combinations until one works.
+
+A better idea is “dictionary attack” that tries words in a dictionary — or a list of common passwords — instead of all possible passwords. This can be very effective, as many people use such weak and common passwords.
+
+We can use automated tool for Brute forcing web-based login form
+
+Using Hydra to dictionary-attack web-based login forms
+Hydra is an online password cracking for dictionary-attacks. It tries lists of user-names and passwords until a successful login is found. It is multi-threaded and can try username/password combinations at a rate of thousands per minute
+
+Bad login, stop bruteforcing me!Bad u/p combination for user: a
+So, now we have the information we need to attack this login form, we can use this info to construct a Hydra brute-force attack as follows:
+Automated Brute Forcing on web-based login
+Brute force attacks work by calculating every possible combination that could make up a password and testing it to see if it is the correct password. As the password’s length increases, the amount of time, on average, to find the correct password increases exponentially. This means short passwords can usually be discovered quite quickly, but longer passwords may take decades [Source : Wiki]
+
+It may be feasible in some situations as computer hardwares are getting faster and faster. A simple brute-force attack would start with one-digit passwords, then two-digit passwords and so on, trying all possible combinations until one works.
+
+A better idea is “dictionary attack” that tries words in a dictionary — or a list of common passwords — instead of all possible passwords. This can be very effective, as many people use such weak and common passwords.
+
+We can use automated tool for Brute forcing web-based login form
+
+Using Hydra to dictionary-attack web-based login forms
+Hydra is an online password cracking for dictionary-attacks. It tries lists of user-names and passwords until a successful login is found. It is multi-threaded and can try username/password combinations at a rate of thousands per minute
+
+Bad login, stop bruteforcing me!Bad u/p combination for user: a
+So, now we have the information we need to attack this login form, we can use this info to construct a Hydra brute-force attack as follows:
+Automated Brute Forcing on web-based login
+Brute force attacks work by calculating every possible combination that could make up a password and testing it to see if it is the correct password. As the password’s length increases, the amount of time, on average, to find the correct password increases exponentially. This means short passwords can usually be discovered quite quickly, but longer passwords may take decades [Source : Wiki]
+
+It may be feasible in some situations as computer hardwares are getting faster and faster. A simple brute-force attack would start with one-digit passwords, then two-digit passwords and so on, trying all possible combinations until one works.
+
+A better idea is “dictionary attack” that tries words in a dictionary — or a list of common passwords — instead of all possible passwords. This can be very effective, as many people use such weak and common passwords.
+
+We can use automated tool for Brute forcing web-based login form
+
+Using Hydra to dictionary-attack web-based login forms
+Hydra is an online password cracking for dictionary-attacks. It tries lists of user-names and passwords until a successful login is found. It is multi-threaded and can try username/password combinations at a rate of thousands per minute
+
+Bad login, stop bruteforcing me!Bad u/p combination for user: a
+So, now we have the information we need to attack this login form, we can use this info to construct a Hydra brute-force attack as follows:

@@ -1,0 +1,30 @@
+Big Data is coming to the nation’s electric grid…finally.
+
+More municipal officials and utilities are already using it to promote smart city development. Now the Department of Energy is moving on a plan to use artificial intelligence and machine learning to develop an autonomous grid. One of the first steps is a project to create algorithms and tools to gather and digest data from satellite imagery, utility operations, and other sources to build a body of knowledge on how electrical distribution systems work, identify places where the grid is vulnerable, reinforce those spots and recover quickly if a failure occurs.
+
+
+SLAC National Accelerator Laboratory is a research center for astrophysics, photon science, accelerator and particle physics. Image: Stanford University
+
+“The idea is to identify anomalies, find trends and then alert system operators,” says Sila Kiliccote, director of DOE’s SLAC National Accelerator Laboratory at Stanford University. SLAC is the lead agency for the project, which also includes Lawrence Berkeley National Laboratory and other federal labs, as well as utility partners including the National Electric Rural Cooperative. “The project will be the first of its kind to use artificial intelligence and machine learning to improve the resilience of the grid.”
+
+The Grid Resilience and Intelligence Project, or GRIP, is a $6-million DOE effort and one of seven projects addressing grid resiliency and security. It is not starting from scratch, Kiliccote says, and will draw from work done by Stanford’s GisMo Lab, especially its VADER project.
+
+VADER, or Visualization and Analytics for Distributed Energy Resources, is an effort to develop and model a set of tools to monitor and oversee control of new electric distribution systems, verify them using data from industry partners, and validate them in a pilot project. Kiliccote points to the changes happening in the distribution system because of the increasing number of renewable energy projects feeding power to the grid. The existing system was designed to handle passive loads traveling one way, from the generation source to the user. Increasingly, loads can now travel in both directions and with a high degree of variability. On the user side, electric vehicles, demand response, and smart loads compound the problem.
+
+“There’s a paradigm shift in the way assets are being run,” she says. “Present models don’t recognize new types of inverters, for instance.”
+
+Solar inverters automatically convert variable direct current from photovoltaic systems to AC current that flows into the grid. Berkeley Lab has developed control systems for the new inverters, and will build on that for GRIP.
+
+“Berkeley Lab has pioneered the development of algorithms that can optimally manage distributed energy resources like wind, solar, and batteries, and are completely plug and play,” said Dan Arnold, the research scientist leading the Berkeley project. For GRIP, those controls will be deployed and tested on an existing utility network. “We hope to be able to create an electric grid that can use distributed energy resources to automatically reconfigure itself to maximize reliability.”
+
+Kiliccote is excited about using the tools with partner utilities. She says a large California utility already is on board but is not yet identified because details of proprietary issues are not yet worked out. However, its partnership with the National Rural Electric Cooperative Association should open up new tools and technologies to small utilities that currently don’t have easy access to them.
+
+NRCA represents 834 distribution cooperatives that provide power to some 42 million customers in 47 states. Vermont Electric Cooperative already is working with a vendor that develops software and systems to adjust power consumption of home thermostat-controlled devices when the grid is overloaded or the power supply fluctuates. Kiliccote says they want to demonstrate tools on how to absorb grid events by reducing loads and moving them around.
+
+In California, the utility will be one of the first places to test the data analytics platform. It will be populated with specific information about what aspects of the grid look like, such as where solar or wind power sources are located, where batteries are located and how distribution lines are laid out. That will allow managers to look for anomalies and identify problem areas and propose appropriate solutions.
+
+Something as common as satellite imagery can play an important role. Although the system is not being designed to handle physical security, it could be used to identify problem areas, such as encroaching stands of trees, and anticipate when they would grow over and threaten power lines.
+
+GRIP will build on VADER’s work to integrate data and provide real-time intelligence through a unified data analytics platform. “This is certainly evolutionary,” says Kiliccote. “We’re not creating new approaches or methodology. It is just that artificial intelligence has not been applied here, on the electric grid. This industry has been dominated by power system engineers, not computer scientists.”
+
+Kiliccote expects to receive the $6-million grant for the three-year program soon. The award is part of DOE’s Grid Modernization Initiative. Other projects receiving funding are distribution system improvements in Alaska using automation network analysis, control and energy storage; increasing distribution resiliency using flexible distributed generations sources and microgrids; and research and validation of open-source home-energy management systems to support distribution resiliency.

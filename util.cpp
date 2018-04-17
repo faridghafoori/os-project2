@@ -2,8 +2,7 @@
 
 using namespace std;
 
-vector<string> split_string(const string &s, char delim)
-{
+vector<string> split_string(const string &s, char delim) {
     stringstream ss(s);
     string item;
     vector<string> tokens;
@@ -13,31 +12,33 @@ vector<string> split_string(const string &s, char delim)
     return tokens;
 }
 
-int to_int(string str)
-{
+void print_vector(std::vector<string> v) {
+    for(int i = 0; i < v.size(); i++) {
+        cout << v[i] << "\t";
+    }
+    cout << endl;
+}
+
+int to_int(string str) {
     int result;
     stringstream ss(str);
     ss >> result;
     return result;
 }
 
-string my_to_string(int num)
-{
+string my_to_string(int num) {
     ostringstream convert;
     convert << num;
     return convert.str();
 }
 
-vector<string> get_dir_list(string base_dir)
-{
+vector<string> get_dir_list(string base_dir) {
     vector<string> result;
     DIR *dir;
     struct dirent *ent;
     struct stat st;
-    if ((dir = opendir(base_dir.c_str())) != NULL)
-    {
-        while ((ent = readdir(dir)) != NULL)
-        {
+    if ((dir = opendir(base_dir.c_str())) != NULL) {
+        while ((ent = readdir(dir)) != NULL) {
             string dir_name(ent->d_name);
             if (dir_name[0] == '.')
                 continue;
@@ -51,24 +52,20 @@ vector<string> get_dir_list(string base_dir)
         }
         closedir(dir);
     }
-    else
-    {
+    else {
         perror("");
         return result;
     }
     return result;
 }
 
-vector<string> get_file_list(string base_dir)
-{
+vector<string> get_file_list(string base_dir) {
     vector<string> result;
     DIR *dir;
     struct dirent *ent;
     struct stat st;
-    if ((dir = opendir(base_dir.c_str())) != NULL)
-    {
-        while ((ent = readdir(dir)) != NULL)
-        {
+    if ((dir = opendir(base_dir.c_str())) != NULL) {
+        while ((ent = readdir(dir)) != NULL) {
             string file_name(ent->d_name);
             if (file_name[0] == '.')
                 continue;
@@ -83,16 +80,14 @@ vector<string> get_file_list(string base_dir)
         }
         closedir(dir);
     }
-    else
-    {
+    else {
         perror("");
         return result;
     }
     return result;
 }
 
-ssize_t sock_fd_write(int sock, void *buf, ssize_t buflen, int fd)
-{
+ssize_t sock_fd_write(int sock, void *buf, ssize_t buflen, int fd) {
     ssize_t size;
     struct msghdr msg;
     struct iovec iov;
@@ -110,8 +105,7 @@ ssize_t sock_fd_write(int sock, void *buf, ssize_t buflen, int fd)
     msg.msg_iov = &iov;
     msg.msg_iovlen = 1;
 
-    if (fd != -1)
-    {
+    if (fd != -1) {
         msg.msg_control = cmsgu.control;
         msg.msg_controllen = sizeof(cmsgu.control);
 
@@ -122,8 +116,7 @@ ssize_t sock_fd_write(int sock, void *buf, ssize_t buflen, int fd)
 
         *((int *)CMSG_DATA(cmsg)) = fd;
     }
-    else
-    {
+    else {
         msg.msg_control = NULL;
         msg.msg_controllen = 0;
         printf("not passing fd\n");
@@ -136,12 +129,10 @@ ssize_t sock_fd_write(int sock, void *buf, ssize_t buflen, int fd)
     return size;
 }
 
-ssize_t sock_fd_read(int sock, void *buf, ssize_t bufsize, int *fd)
-{
+ssize_t sock_fd_read(int sock, void *buf, ssize_t bufsize, int *fd) {
     ssize_t size;
 
-    if (fd)
-    {
+    if (fd) {
         struct msghdr msg;
         struct iovec iov;
         union {
@@ -160,24 +151,18 @@ ssize_t sock_fd_read(int sock, void *buf, ssize_t bufsize, int *fd)
         msg.msg_control = cmsgu.control;
         msg.msg_controllen = sizeof(cmsgu.control);
         size = recvmsg(sock, &msg, 0);
-        if (size < 0)
-        {
+        if (size < 0) {
             perror("recvmsg");
             exit(1);
         }
         cmsg = CMSG_FIRSTHDR(&msg);
-        if (cmsg && cmsg->cmsg_len == CMSG_LEN(sizeof(int)))
-        {
-            if (cmsg->cmsg_level != SOL_SOCKET)
-            {
-                fprintf(stderr, "invalid cmsg_level %d\n",
-                        cmsg->cmsg_level);
+        if (cmsg && cmsg->cmsg_len == CMSG_LEN(sizeof(int))) {
+            if (cmsg->cmsg_level != SOL_SOCKET) {
+                fprintf(stderr, "invalid cmsg_level %d\n", cmsg->cmsg_level);
                 exit(1);
             }
-            if (cmsg->cmsg_type != SCM_RIGHTS)
-            {
-                fprintf(stderr, "invalid cmsg_type %d\n",
-                        cmsg->cmsg_type);
+            if (cmsg->cmsg_type != SCM_RIGHTS) {
+                fprintf(stderr, "invalid cmsg_type %d\n", cmsg->cmsg_type);
                 exit(1);
             }
 
@@ -186,11 +171,9 @@ ssize_t sock_fd_read(int sock, void *buf, ssize_t bufsize, int *fd)
         else
             *fd = -1;
     }
-    else
-    {
+    else {
         size = read(sock, buf, bufsize);
-        if (size < 0)
-        {
+        if (size < 0) {
             perror("read");
             exit(1);
         }

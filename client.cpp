@@ -16,35 +16,35 @@
 
 using namespace std;
 
-void *get_in_addr(struct sockaddr *sa)
-{
-    if (sa->sa_family == AF_INET)
-    {
+void *get_in_addr(struct sockaddr *sa) {
+    if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in *)sa)->sin_addr);
     }
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
-int get_total_fine(string car_id, int socket)
-{
+int get_total_fine(string argv1, string argv2, string argv3, int socket) {
     int numbytes = 0;
     char buf[MAXBUF];
+    string all_words = "";
+    all_words = all_words + argv1 + "?" + argv2 + "?" + argv3;
+    cout << "all_words : " << all_words << endl;
+    // vector<string> priority_one = split_string(argv[4], ',');
+    // vector<string> priority_two = split_string(argv[5], ',');
+    // vector<string> priority_three = split_string(argv[6], ',');
 
-    string request = GETFINE + REQUESTDELIM + car_id;
+    string request = GETFINE + REQUESTDELIM + all_words;
     send(socket, request.c_str(), strlen(request.c_str()), 0);
-    if ((numbytes = recv(socket, buf, MAXBUF - 1, 0)) == -1)
-    {
+    if ((numbytes = recv(socket, buf, MAXBUF - 1, 0)) == -1) {
         perror("recv");
         return 1;
     }
     buf[numbytes] = '\0';
-    if (strstr(buf, "ERROR:") != NULL)
-    {
+    if (strstr(buf, "ERROR:") != NULL) {
         printf("%s\n", buf);
         return 1;
     }
-    else
-    {
+    else {
         string response(buf);
         stringstream ss(response);
         int fine = -1;
@@ -53,17 +53,15 @@ int get_total_fine(string car_id, int socket)
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int sockfd, numbytes;
     char buf[MAXBUF];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
 
-    if (argc != 3)
-    {
-        printf("usage: address port\n");
+    if (argc != 7) {
+        cout << "Error : wrong command (The number of inputs is not appropriate)" << endl;
         exit(1);
     }
 
@@ -71,23 +69,18 @@ int main(int argc, char *argv[])
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
-    if ((rv = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0)
-    {
+    if ((rv = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
         printf("getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
     }
 
-    for (p = servinfo; p != NULL; p = p->ai_next)
-    {
-        if ((sockfd = socket(p->ai_family, p->ai_socktype,
-                             p->ai_protocol)) == -1)
-        {
+    for (p = servinfo; p != NULL; p = p->ai_next) {
+        if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
             printf("client: socket\n");
             continue;
         }
 
-        if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1)
-        {
+        if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
             close(sockfd);
             printf("client: connect\n");
             continue;
@@ -96,41 +89,48 @@ int main(int argc, char *argv[])
         break;
     }
 
-    if (p == NULL)
-    {
+    if (p == NULL) {
         printf("client: failed to connect\n");
         return 2;
     }
 
-    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
-              s, sizeof s);
+    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof s);
     printf("client: connecting to %s\n", s);
 
     freeaddrinfo(servinfo);
 
-    while (true)
-    {
-        printf("\nWelcome!\nPossible Commands:\n\t1- report <car_id>\n\t2- exit\n\n");
+    while (true) {
+        cout << "\nHello " << argv[3] << endl;
+        cout << "The first  [word/words] : " << argv[4] << endl;
+        cout << "The second [word/words] : " << argv[5] << endl;
+        cout << "The Third  [word/words] : " << argv[6] << endl;
+        cout << "\nPossible commands‌ : {" << endl;
+        cout << "\t1 - result" << endl;
+        cout << "\t2 - exit" << endl;
+        cout << "}" << endl; 
+        // printf("\nWelcome!\nPossible Commands:\n\t1- report\n\t2- exit\n\n");
 
         string command;
+        cout << "\nPlease enter your command : ";
         getline(cin, command);
-        if (command == "exit")
-        {
+        if (command == "exit") {
             break;
         }
-        else
-        {
-            vector<string> cmd = split_string(command, ' ');
-            if (cmd.size() == 2 && cmd[0] == "report")
-            {
-                printf("Fetching your car's report ...\n");
-                printf("Car %s total fine is : $%d\n", cmd[1].c_str(), get_total_fine(cmd[1], sockfd));
-            }
-            else
-            {
-                printf("Invalid command!!\n");
-                continue;
-            }
+        else if(command == "result") {
+            // cout << "priority_one : " << endl;
+            // print_vector(priority_one);
+            // cout << "priority_two : " << endl;
+            // print_vector(priority_two);
+            // cout << "priority_three : " << endl;
+            // print_vector(priority_three);
+
+            // vector<string> cmd = split_string(command, ' ');
+            cout << "Fetching your result..." << endl;
+            cout << "Result " << argv[3] << " total fine is : " << get_total_fine(argv[4], argv[5], argv[6], sockfd) << endl;
+        }
+        else {
+            printf("Invalid command!!\n");
+            continue;
         }
     }
 

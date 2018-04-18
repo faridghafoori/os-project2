@@ -1,8 +1,8 @@
-CC=g++ -w -g
-CFLAGS=-c
-headers=util.h constants.h
-server_objs=server.o util.o 
-client_objs=client.o util.o
+CC			= g++ -w -g
+CFLAGS		= -c
+headers		= util.h constants.h
+server_objs = server.o util.o 
+client_objs = client.o util.o
 
 all: server client
 
@@ -22,5 +22,6 @@ util.o: util.cpp $(headers)
 	$(CC) $(CFLAGS) util.cpp
 
 clean:
-	find . -name "*.o" -type f -delete
-	find . -name "*.out" -type f -delete
+	rm *.o
+	rm server
+	rm client

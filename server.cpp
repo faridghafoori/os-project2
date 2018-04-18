@@ -26,29 +26,52 @@ void *get_in_addr(struct sockaddr *sa) {
 	return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
-int calc_fine(string car_id, string file_path) {
-	int report_fine = 0;
+int check_priority_words(std::vector<string> data, std::vector<string> selected_words) {
+	int count = 0;
+	for(int i = 0; i < data.size(); i++) {
+		for(int j = 0; j < selected_words.size(); j++) {
+			if(data[i] == selected_words[j]) {
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int calc_priority_words(string words, string path) {
+	vector<string> split_words     = split_string(words, '?');
+	vector<string> first_priority  = split_string(split_words[0], ',');
+	vector<string> second_priority = split_string(split_words[1], ',');
+	vector<string> third_priority  = split_string(split_words[2], ',');
+ 	int report_fine = 0;
+ 	int pri_one = 0, pri_two = 0, pri_three = 0;
 	ifstream inFile;
-	inFile.open(file_path.c_str());
+	inFile.open(path.c_str());
 	if (!inFile) {
-		cout << "Unable to open file: " << file_path << endl;
+		cout << "Unable to open file: " << path << endl;
 		return -1;
 	}
 	string line;
 	while (getline(inFile, line)) {
 		vector<string> data = split_string(line, ' ');
-		if (data[0] == car_id) {
-			report_fine += to_int(data[2]);
-		}
+		pri_one += (check_priority_words(data, first_priority) * PRIORITY_ONE);
+		pri_two += (check_priority_words(data, second_priority) * PRIORITY_TWO);
+		pri_three += (check_priority_words(data, third_priority) * PRIORITY_THREE);
+		report_fine = pri_one + pri_two + pri_three;
 	}
 	inFile.close();
+	cout << "\nNumber of words with priority of one   : " << pri_one << " => * PRIORITY_ONE(6)  = " << pri_one*PRIORITY_ONE;
+	cout << "\nNumber of words with priority of two   : " << pri_two << " => * PRIORITY_TWO(3)  = " << pri_two*PRIORITY_TWO;
+	cout << "\nNumber of words with priority of three : " << pri_three << " => * PRIORITY_THREE(2)  = " << pri_three*PRIORITY_THREE << endl;
+	cout << "--------------------------------------------------------------------------------" << endl;
 	return report_fine;
 }
 
-int total_fine(string car_id, string base_dir) {
+int browse_in_files(string words, string base_dir) {
 	int fine = 0;
 	vector<string> dir_list = get_dir_list(base_dir);
 	vector<string> file_list = get_file_list(base_dir);
+
 	for (int i = 0; i < dir_list.size(); i++) {
 		const string child_dir = base_dir + SLASH + dir_list[i];
 		int pipefd[2];
@@ -57,7 +80,7 @@ int total_fine(string car_id, string base_dir) {
 		pid_t pid = fork();
 		if (pid == 0) {
 			cout << "Calculating child: " << child_dir << endl;
-			int result = total_fine(car_id, child_dir);
+			int result = browse_in_files(words, child_dir);
 			close(pipefd[0]);
 			write(pipefd[1], my_to_string(result).c_str(), strlen(my_to_string(result).c_str()));
 			kill(getpid(), SIGTERM);
@@ -78,7 +101,7 @@ int total_fine(string car_id, string base_dir) {
 		pipe(pipefd);
 		pid_t pid = fork();
 		if (pid == 0) {
-			int result = calc_fine(car_id, file_dir);
+			int result = calc_priority_words(words, file_dir);
 			close(pipefd[0]);
 			write(pipefd[1], my_to_string(result).c_str(), strlen(my_to_string(result).c_str()));
 			cout << "Calculating file: " << file_dir << " = " << result << endl;
@@ -95,7 +118,7 @@ int total_fine(string car_id, string base_dir) {
 	return fine;
 }
 
-void create_p2_process(int socket[]) {
+void create_process_P2(int socket[]) {
 	// P2 CHILD PROCESS
 	pid_t pid = fork();
 	if (pid == 0) {
@@ -134,7 +157,7 @@ void create_p2_process(int socket[]) {
 
 int main(int argc, char *argv[]) {
 	if (argc != 3) {
-		cout << "usage: address port" << endl;
+		cout << "\nError : wrong command (The number of inputs is not appropriate)\n" << endl;
 		exit(1);
 	}
 	int sharedSocket[2];
@@ -143,7 +166,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 	
-	create_p2_process(sharedSocket);
+	create_process_P2(sharedSocket);
 
 	mkfifo(OSFIFO.c_str(), 0666);
 
@@ -224,9 +247,7 @@ int main(int argc, char *argv[]) {
 			if (FD_ISSET(i, &read_fds)) {
 				if (i == listener) {
 					addrlen = sizeof remoteaddr;
-					newfd = accept(listener,
-								   (struct sockaddr *)&remoteaddr,
-								   &addrlen);
+					newfd = accept(listener, (struct sockaddr *)&remoteaddr, &addrlen);
 
 					if (newfd == -1) {
 						perror("accept");
@@ -237,9 +258,9 @@ int main(int argc, char *argv[]) {
 							fdmax = newfd;
 						}
 						printf("selectserver: new connection from %s on "
-							   "socket %d\n", inet_ntop(remoteaddr.ss_family,
-										 get_in_addr((struct sockaddr *)&remoteaddr),
-										 remoteIP, INET6_ADDRSTRLEN), newfd);
+							   "socket %d\n", inet_ntop(remoteaddr.ss_family, 
+							   	get_in_addr((struct sockaddr *)&remoteaddr),
+							   	remoteIP, INET6_ADDRSTRLEN), newfd);
 					}
 				}
 				else if (i == STDIN) {
@@ -277,13 +298,14 @@ int main(int argc, char *argv[]) {
 						buf[nbytes] = '\0';
 						string request(buf);
 						cout << "Request received: " << request << endl;
-						vector<string> parsed_request = split_string(request, '?');
-						if (parsed_request.size() == 2) {
-							if (parsed_request[0] == GETFINE) {
+						vector<string> parse_req = split_string(request, '*');
+						if (parse_req.size() == 2) {
+							if (parse_req[0] == GETFINE) {
 								pid_t pid = fork();
 								if (pid == 0) {
 									// P1 CHILD PROCESS
-									string response = my_to_string(total_fine(parsed_request[1], BASEDIR));
+									string response = my_to_string(browse_in_files(parse_req[1], BASEDIR));
+
 									// SEND MESSAGE TO P2 NAMED PIPE
 									int fd;
 									fd = open(OSFIFO.c_str(), O_WRONLY);

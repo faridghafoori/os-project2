@@ -4,10 +4,13 @@
 #include <string>
 
 #define MAXBUF 1024
-const std::string GETFINE = "getfine";
-const std::string REQUESTDELIM = "?";
-const std::string BASEDIR = "./Data";
-const std::string SLASH = "/";
-const std::string OSFIFO = "/tmp/osfifo";
+const std::string GETFINE 	   = "getfine";
+const std::string REQUESTDELIM = "*";
+const std::string BASEDIR 	   = "./Data";
+const std::string SLASH 	   = "/";
+const std::string OSFIFO 	   = "/tmp/osfifo";
+const int PRIORITY_ONE 	 	   = 6;
+const int PRIORITY_TWO 	       = 3;
+const int PRIORITY_THREE       = 2;
 
 #endif

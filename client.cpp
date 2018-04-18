@@ -23,16 +23,11 @@ void *get_in_addr(struct sockaddr *sa) {
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
-int get_total_fine(string argv1, string argv2, string argv3, int socket) {
+int passing_words_to_server(string argv1, string argv2, string argv3, int socket) {
     int numbytes = 0;
     char buf[MAXBUF];
     string all_words = "";
     all_words = all_words + argv1 + "?" + argv2 + "?" + argv3;
-    cout << "all_words : " << all_words << endl;
-    // vector<string> priority_one = split_string(argv[4], ',');
-    // vector<string> priority_two = split_string(argv[5], ',');
-    // vector<string> priority_three = split_string(argv[6], ',');
-
     string request = GETFINE + REQUESTDELIM + all_words;
     send(socket, request.c_str(), strlen(request.c_str()), 0);
     if ((numbytes = recv(socket, buf, MAXBUF - 1, 0)) == -1) {
@@ -61,7 +56,7 @@ int main(int argc, char *argv[]) {
     char s[INET6_ADDRSTRLEN];
 
     if (argc != 7) {
-        cout << "Error : wrong command (The number of inputs is not appropriate)" << endl;
+        cout << "\nError : wrong command (The number of inputs is not appropriate)\n" << endl;
         exit(1);
     }
 
@@ -104,29 +99,22 @@ int main(int argc, char *argv[]) {
         cout << "The first  [word/words] : " << argv[4] << endl;
         cout << "The second [word/words] : " << argv[5] << endl;
         cout << "The Third  [word/words] : " << argv[6] << endl;
-        cout << "\nPossible commands‌ : {" << endl;
+        cout << "\nPossible commands‌  (Just enter the number of commands)  : {" << endl;
         cout << "\t1 - result" << endl;
-        cout << "\t2 - exit" << endl;
+        cout << "\t3 - exit" << endl;
         cout << "}" << endl; 
         // printf("\nWelcome!\nPossible Commands:\n\t1- report\n\t2- exit\n\n");
 
         string command;
         cout << "\nPlease enter your command : ";
         getline(cin, command);
-        if (command == "exit") {
+        if (command == "2") {
             break;
         }
-        else if(command == "result") {
-            // cout << "priority_one : " << endl;
-            // print_vector(priority_one);
-            // cout << "priority_two : " << endl;
-            // print_vector(priority_two);
-            // cout << "priority_three : " << endl;
-            // print_vector(priority_three);
-
-            // vector<string> cmd = split_string(command, ' ');
-            cout << "Fetching your result..." << endl;
-            cout << "Result " << argv[3] << " total fine is : " << get_total_fine(argv[4], argv[5], argv[6], sockfd) << endl;
+        else if(command == "1") {
+            cout << "\nFetching your result..." << endl;
+            cout << "Final result for " << argv[3] << " user is : " << passing_words_to_server(argv[4], argv[5], argv[6], sockfd) << endl;
+            cout << "---------------------------------------------------------------------------";
         }
         else {
             printf("Invalid command!!\n");

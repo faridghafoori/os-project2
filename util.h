@@ -18,6 +18,7 @@
 #include "constants.h"
 
 std::vector<std::string> split_string(const std::string &s, char delim);
+void print_vector(std::vector<std::string> v);
 int to_int(std::string str);
 std::string my_to_string(int num);
 std::vector<std::string> get_dir_list(std::string base_dir);

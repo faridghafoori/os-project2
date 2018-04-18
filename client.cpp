@@ -28,7 +28,7 @@ int passing_words_to_server(string argv1, string argv2, string argv3, int socket
     char buf[MAXBUF];
     string all_words = "";
     all_words = all_words + argv1 + "?" + argv2 + "?" + argv3;
-    string request = GETFINE + REQUESTDELIM + all_words;
+    string request = REQUEST + REQUESTDELIM + all_words;
     send(socket, request.c_str(), strlen(request.c_str()), 0);
     if ((numbytes = recv(socket, buf, MAXBUF - 1, 0)) == -1) {
         perror("recv");
@@ -42,9 +42,9 @@ int passing_words_to_server(string argv1, string argv2, string argv3, int socket
     else {
         string response(buf);
         stringstream ss(response);
-        int fine = -1;
-        ss >> fine;
-        return fine;
+        int tmp = -1;
+        ss >> tmp;
+        return tmp;
     }
 }
 
@@ -101,9 +101,8 @@ int main(int argc, char *argv[]) {
         cout << "The Third  [word/words] : " << argv[6] << endl;
         cout << "\nPossible commands‌  (Just enter the number of commands)  : {" << endl;
         cout << "\t1 - result" << endl;
-        cout << "\t3 - exit" << endl;
+        cout << "\t2 - exit" << endl;
         cout << "}" << endl; 
-        // printf("\nWelcome!\nPossible Commands:\n\t1- report\n\t2- exit\n\n");
 
         string command;
         cout << "\nPlease enter your command : ";

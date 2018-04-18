@@ -4,7 +4,7 @@
 #include <string>
 
 #define MAXBUF 1024
-const std::string GETFINE 	   = "getfine";
+const std::string REQUEST 	   = "REQUEST";
 const std::string REQUESTDELIM = "*";
 const std::string BASEDIR 	   = "./Data";
 const std::string SLASH 	   = "/";

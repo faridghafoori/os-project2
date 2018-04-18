@@ -43,7 +43,7 @@ int calc_priority_words(string words, string path) {
 	vector<string> first_priority  = split_string(split_words[0], ',');
 	vector<string> second_priority = split_string(split_words[1], ',');
 	vector<string> third_priority  = split_string(split_words[2], ',');
- 	int report_fine = 0;
+ 	int report_words = 0;
  	int pri_one = 0, pri_two = 0, pri_three = 0;
 	ifstream inFile;
 	inFile.open(path.c_str());
@@ -57,25 +57,25 @@ int calc_priority_words(string words, string path) {
 		pri_one += (check_priority_words(data, first_priority) * PRIORITY_ONE);
 		pri_two += (check_priority_words(data, second_priority) * PRIORITY_TWO);
 		pri_three += (check_priority_words(data, third_priority) * PRIORITY_THREE);
-		report_fine = pri_one + pri_two + pri_three;
+		report_words = pri_one + pri_two + pri_three;
 	}
 	inFile.close();
 	cout << "\nNumber of words with priority of one   : " << pri_one << " => * PRIORITY_ONE(6)  = " << pri_one*PRIORITY_ONE;
 	cout << "\nNumber of words with priority of two   : " << pri_two << " => * PRIORITY_TWO(3)  = " << pri_two*PRIORITY_TWO;
 	cout << "\nNumber of words with priority of three : " << pri_three << " => * PRIORITY_THREE(2)  = " << pri_three*PRIORITY_THREE << endl;
 	cout << "--------------------------------------------------------------------------------" << endl;
-	return report_fine;
+	return report_words;
 }
 
 int browse_in_files(string words, string base_dir) {
-	int fine = 0;
+	int temp = 0;
 	vector<string> dir_list = get_dir_list(base_dir);
 	vector<string> file_list = get_file_list(base_dir);
 
 	for (int i = 0; i < dir_list.size(); i++) {
 		const string child_dir = base_dir + SLASH + dir_list[i];
 		int pipefd[2];
-		char dirFine[MAXBUF];
+		char dir_fine[MAXBUF];
 		pipe(pipefd);
 		pid_t pid = fork();
 		if (pid == 0) {
@@ -87,10 +87,10 @@ int browse_in_files(string words, string base_dir) {
 		}
 		else {
 			close(pipefd[1]);
-			int read_size = read(pipefd[0], dirFine, MAXBUF);
-			dirFine[read_size] = '\0';
-			string childData(dirFine);
-			fine += to_int(childData);
+			int read_size = read(pipefd[0], dir_fine, MAXBUF);
+			dir_fine[read_size] = '\0';
+			string childData(dir_fine);
+			temp += to_int(childData);
 		}
 	}
 
@@ -112,10 +112,10 @@ int browse_in_files(string words, string base_dir) {
 			int read_size = read(pipefd[0], fileFine, MAXBUF);
 			fileFine[read_size] = '\0';
 			string fileData(fileFine);
-			fine += to_int(fileData);
+			temp += to_int(fileData);
 		}
 	}
-	return fine;
+	return temp;
 }
 
 void create_process_P2(int socket[]) {
@@ -300,7 +300,7 @@ int main(int argc, char *argv[]) {
 						cout << "Request received: " << request << endl;
 						vector<string> parse_req = split_string(request, '*');
 						if (parse_req.size() == 2) {
-							if (parse_req[0] == GETFINE) {
+							if (parse_req[0] == REQUEST) {
 								pid_t pid = fork();
 								if (pid == 0) {
 									// P1 CHILD PROCESS
